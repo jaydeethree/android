@@ -597,6 +597,13 @@ internal class FrontendViewModel @VisibleForTesting constructor(
                 Timber.d("Improv event received but not yet handled: $result")
             }
 
+            is FrontendHandlerEvent.StartMatterCommissioning,
+            is FrontendHandlerEvent.ImportThreadCredentials,
+            -> {
+                // Matter/Thread handling lands in a follow-up PR
+                Timber.d("Matter/Thread event received but not yet handled: $result")
+            }
+
             is FrontendHandlerEvent.ConfigSent,
             is FrontendHandlerEvent.UnknownMessage,
             -> {

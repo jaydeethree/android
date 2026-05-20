@@ -19,11 +19,13 @@ import io.homeassistant.companion.android.frontend.externalbus.incoming.HapticMe
 import io.homeassistant.companion.android.frontend.externalbus.incoming.ImprovConfigureDeviceMessage
 import io.homeassistant.companion.android.frontend.externalbus.incoming.ImprovScanMessage
 import io.homeassistant.companion.android.frontend.externalbus.incoming.IncomingExternalBusMessage
+import io.homeassistant.companion.android.frontend.externalbus.incoming.MatterCommissionMessage
 import io.homeassistant.companion.android.frontend.externalbus.incoming.OpenAssistMessage
 import io.homeassistant.companion.android.frontend.externalbus.incoming.OpenAssistSettingsMessage
 import io.homeassistant.companion.android.frontend.externalbus.incoming.OpenSettingsMessage
 import io.homeassistant.companion.android.frontend.externalbus.incoming.TagWriteMessage
 import io.homeassistant.companion.android.frontend.externalbus.incoming.ThemeUpdateMessage
+import io.homeassistant.companion.android.frontend.externalbus.incoming.ThreadImportCredentialsMessage
 import io.homeassistant.companion.android.frontend.externalbus.incoming.UnknownIncomingMessage
 import io.homeassistant.companion.android.frontend.externalbus.outgoing.ConfigResult
 import io.homeassistant.companion.android.frontend.externalbus.outgoing.ResultMessage
@@ -236,6 +238,16 @@ class FrontendMessageHandler @Inject constructor(
             is ImprovConfigureDeviceMessage -> {
                 Timber.d("improv/configure_device received with id: ${message.id}")
                 FrontendHandlerEvent.ConfigureImprovDevice(deviceName = message.payload.name)
+            }
+
+            is MatterCommissionMessage -> {
+                Timber.d("matter/commission received with id: ${message.id}")
+                FrontendHandlerEvent.StartMatterCommissioning(messageId = message.id)
+            }
+
+            is ThreadImportCredentialsMessage -> {
+                Timber.d("thread/import_credentials received with id: ${message.id}")
+                FrontendHandlerEvent.ImportThreadCredentials(messageId = message.id)
             }
 
             is UnknownIncomingMessage -> {
